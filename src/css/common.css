@@ -15,3 +15,40 @@ img {
   max-width: 100%;
 }
 
+.timer-btn {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition-property: background-color, font-size;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.timer-btn:hover{
+  background-color: #013f28;
+  font-size: 18px;
+}
+#date-selector {
+    padding: 10px 32px; 
+    text-decoration: none;
+    font-size: 16px;
+    transition-property: border-color, font-size;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+#date-selector:hover{
+  border-color: #013f28;
+  font-size: 18px;
+}
+.timer {
+  display: flex;
+}
+.field{
+  margin-right: 10px;
+  font-size: 20px;
+}

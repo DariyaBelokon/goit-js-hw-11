@@ -1,14 +1,15 @@
 // ======================= Subtask 1 =======================
 const delay = ms => {
-  // Change this function
+  return new Promise((resolve) => setTimeout(() => {resolve(ms)}, ms)
+  )
 };
 
 const logger = time => console.log(`Fulfilled after ${time}ms`);
 
 // Tests
-delay(2000).then(logger); // Fulfilled after 2000ms
-delay(1000).then(logger); // Fulfilled after 1000ms
-delay(1500).then(logger); // Fulfilled after 1500ms
+// delay(2000).then(logger); // Fulfilled after 2000ms
+// delay(1000).then(logger); // Fulfilled after 1000ms
+// delay(1500).then(logger); // Fulfilled after 1500ms
 
 // ======================= Subtask 2 =======================
 const users = [
@@ -17,13 +18,29 @@ const users = [
   { name: 'Ajax', active: false },
 ];
 
-const toggleUserState = (allUsers, username, callback) => {
-  const updatedUsers = allUsers.map(user =>
+// const toggleUserState = (allUsers, username, callback) => {
+//   const updatedUsers = allUsers.map(user =>
+//     user.name === username ? { ...user, active: !user.active } : user
+//   );
+
+//   callback(updatedUsers);
+// };
+
+
+
+const toggleUserState = (allUsers, username) => {
+  const newUsers = allUsers.map(user =>
     user.name === username ? { ...user, active: !user.active } : user
   );
 
-  callback(updatedUsers);
-};
+  return Promise.resolve(newUsers);
+}
+
+
+// toggleUserState.then(
+//   result => { console.table(result) },
+//   )
+
 
 // Currently the function works like this
 // toggleUserState(users, 'Mango', console.table);
@@ -34,22 +51,41 @@ const toggleUserState = (allUsers, username, callback) => {
 // toggleUserState(users, 'Ajax').then(console.table);
 
 // ======================= Subtask 3 =======================
+
+
+// Currently the function works like this
+// makeTransaction({ id: 70, amount: 150 }, logSuccess, logError);
+// makeTransaction({ id: 71, amount: 230 }, logSuccess, logError);
+// makeTransaction({ id: 72, amount: 75 }, logSuccess, logError);
+// makeTransaction({ id: 73, amount: 100 }, logSuccess, logError);
+
+// The function should work like this
+// makeTransaction({ id: 70, amount: 150 }).then(logSuccess).catch(logError);
+// makeTransaction({ id: 71, amount: 230 }).then(logSuccess).catch(logError);
+// makeTransaction({ id: 72, amount: 75 }).then(logSuccess).catch(logError);
+// makeTransaction({ id: 73, amount: 100 }).then(logSuccess).catch(logError);
+
 const randomIntegerFromInterval = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-const makeTransaction = (transaction, onSuccess, onError) => {
-  const delay = randomIntegerFromInterval(200, 500);
+const makeTransaction = (transaction) => {
+  
+  const promise = new Promise((resolve, rejected) => {
+    
+    const delay = randomIntegerFromInterval(200, 500);
 
   setTimeout(() => {
     const canProcess = Math.random() > 0.3;
 
-    if (canProcess) {
-      onSuccess({ id: transaction.id, time: delay });
+     if (canProcess) {
+      resolve({ id: transaction.id, time: delay });
     } else {
-      onError(transaction.id);
+      rejected (transaction.id);
     }
   }, delay);
+  })
+  return promise;
 };
 
 const logSuccess = ({ id, time }) => {
@@ -66,8 +102,7 @@ const logError = id => {
 // makeTransaction({ id: 72, amount: 75 }, logSuccess, logError);
 // makeTransaction({ id: 73, amount: 100 }, logSuccess, logError);
 
-// The function should work like this
-// makeTransaction({ id: 70, amount: 150 }).then(logSuccess).catch(logError);
-// makeTransaction({ id: 71, amount: 230 }).then(logSuccess).catch(logError);
-// makeTransaction({ id: 72, amount: 75 }).then(logSuccess).catch(logError);
-// makeTransaction({ id: 73, amount: 100 }).then(logSuccess).catch(logError);
+makeTransaction({ id: 70, amount: 150 }).then(logSuccess).catch(logError);
+makeTransaction({ id: 71, amount: 230 }).then(logSuccess).catch(logError);
+makeTransaction({ id: 72, amount: 75 }).then(logSuccess).catch(logError);
+makeTransaction({ id: 73, amount: 100 }).then(logSuccess).catch(logError);
